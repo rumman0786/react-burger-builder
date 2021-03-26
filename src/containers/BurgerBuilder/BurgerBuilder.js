@@ -4,10 +4,10 @@ import Burger from '../../components/Burger/Burger';
 
 import Aux from '../../hoc/aux';
 const INGRIDIENT_PRICES = {
-    salad: 50,
-    bacon: 90,
-    cheese: 70,
-    meat: 200
+    salad: 50.55,
+    bacon: 90.35,
+    cheese: 70.167,
+    meat: 200.199
 }
 class BurgerBuilder extends Component {
     
@@ -67,6 +67,7 @@ class BurgerBuilder extends Component {
                     addHandler={this.addIngridientHandler}
                     removeHandler={this.removeIngridientHandler}
                     disabledHandler={disabledInfo}
+                    currentPrice={this.state.totalPrice}
                 />
             </Aux>
         );
