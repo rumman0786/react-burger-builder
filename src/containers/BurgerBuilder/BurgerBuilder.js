@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4.0,
-        pruchasable: false
+        purchasable: false,
+        purchasing: false
     }
 
     updatePurchasableHandler = (ingridients) => {
@@ -30,7 +31,7 @@ class BurgerBuilder extends Component {
                            .map(ingridientKey => ingridients[ingridientKey])
                            .reduce((sum, ingridentAmount) => sum + ingridentAmount, 0);
 
-        this.setState({pruchasable: sum > 0});
+        this.setState({purchasable: sum > 0});
     }
 
     addIngridientHandler = (type) => {
@@ -66,6 +67,15 @@ class BurgerBuilder extends Component {
             this.updatePurchasableHandler(newIngridients);
         }
     }
+
+    puchaseHandler = () => {
+        this.setState({purchasing: true});
+    }
+
+    onBackdropClickHandler = () => {
+        console.log("Called");
+        this.setState({purchasing: false});
+    }
     
     render() {
         const disabledInfo = {
@@ -77,7 +87,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <Aux>
-                <Modal>
+                <Modal showSummary={this.state.purchasing} backdropHandler={this.onBackdropClickHandler}>
                     <OrderSummary ingridients={this.state.ingridients}></OrderSummary>
                 </Modal>
                 <Burger ingridients={this.state.ingridients}/>
@@ -86,7 +96,8 @@ class BurgerBuilder extends Component {
                     removeHandler={this.removeIngridientHandler}
                     disabledHandler={disabledInfo}
                     currentPrice={this.state.totalPrice}
-                    pruchasable={this.state.pruchasable}
+                    purchasable={this.state.purchasable}
+                    ordered={this.puchaseHandler}
                 />
             </Aux>
         );
