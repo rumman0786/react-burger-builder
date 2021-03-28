@@ -72,9 +72,12 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: true});
     }
 
-    onBackdropClickHandler = () => {
-        console.log("Called");
+    purchaseCancelled = () => {
         this.setState({purchasing: false});
+    }
+
+    purchaseContinued = () => {
+        alert('User chose to continue');
     }
     
     render() {
@@ -87,8 +90,12 @@ class BurgerBuilder extends Component {
         }
         return (
             <Aux>
-                <Modal showSummary={this.state.purchasing} backdropHandler={this.onBackdropClickHandler}>
-                    <OrderSummary ingridients={this.state.ingridients}></OrderSummary>
+                <Modal showSummary={this.state.purchasing} backdropHandler={this.purchaseCancelled}>
+                    <OrderSummary ingridients={this.state.ingridients}
+                                  price={this.state.totalPrice}
+                                  continued={this.purchaseContinued}
+                                  cancelled={this.purchaseCancelled}
+                    />
                 </Modal>
                 <Burger ingridients={this.state.ingridients}/>
                 <BuildControls 
