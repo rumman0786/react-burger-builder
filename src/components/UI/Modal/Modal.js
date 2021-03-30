@@ -7,7 +7,10 @@ import Backdrop from '../Backdrop/Backdrop'
 const modal = (props) => {
     return (
         <Aux>
-            <Backdrop showSummary={props.showSummary} clicked={props.backdropHandler}/>
+            <Backdrop
+                show={props.showSummary}
+                closed={props.backdropHandler}/>
+
             <div className={styles.Modal}
                 style={
                     { transform: props.showSummary ? 'translateY(0)' : 'translateY(-100vh)',
