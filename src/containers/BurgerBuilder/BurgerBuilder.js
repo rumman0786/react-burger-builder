@@ -4,7 +4,8 @@ import Burger from '../../components/Burger/Burger';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Modal from '../../components/UI/Modal/Modal'
 
-import Aux from '../../hoc/aux';
+import Aux from '../../hoc/Aux/aux';
+
 const INGRIDIENT_PRICES = {
     salad: 50.55,
     bacon: 90.35,
