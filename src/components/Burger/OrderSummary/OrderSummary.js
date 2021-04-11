@@ -12,10 +12,10 @@ class OrderSummary extends Component {
     render() {
         const ingridientSummary = Object.keys(this.props.ingridients)
                               .map(igKey => {
-                                    return <li key={igKey}>
+                                    return (<li key={igKey}>
                                                 <span className={{textTransformat: 'capitalize'}}>{igKey}</span>
                                                 : {this.props.ingridients[igKey]}
-                                            </li>
+                                            </li>);
                               });
                               
         return(
