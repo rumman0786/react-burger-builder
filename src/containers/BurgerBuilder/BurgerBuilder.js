@@ -86,32 +86,43 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinued = () => {
+        console.log(this.props);
+        // this.setState({loading: true});
 
-        this.setState({loading: true});
+        // const orderData = {
+        //     ingridients: this.state.ingridients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Rumman Bin Ashraf',
+        //         address: {
+        //             street: 'Iqbal Road',
+        //             zip: 1212,
+        //             country: 'Bangladesh'
+        //         },
+        //         email: 'rumman.ashraf@gmail.com'
+        //     },
+        //     paymentMethod: 'Cash on Delivery',
+        //     deliveryType: 'Regular'
+        // }
 
-        const orderData = {
-            ingridients: this.state.ingridients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Rumman Bin Ashraf',
-                address: {
-                    street: 'Iqbal Road',
-                    zip: 1212,
-                    country: 'Bangladesh'
-                },
-                email: 'rumman.ashraf@gmail.com'
-            },
-            paymentMethod: 'Cash on Delivery',
-            deliveryType: 'Regular'
+        // axiosOrder.post('/orders.json', orderData)
+        //           .then(response => {
+        //             this.setState({loading: false, purchasing: false});
+        //           })
+        //           .catch(error => {
+        //             this.setState({loading: false, purchasing: false});
+        //           });
+        let queryParams = [];
+        for(const [ingridient, quantity] of Object.entries(this.state.ingridients)) {
+            queryParams.push(encodeURIComponent(ingridient) + '=' + encodeURIComponent(quantity));
         }
 
-        axiosOrder.post('/orders.json', orderData)
-                  .then(response => {
-                    this.setState({loading: false, purchasing: false});
-                  })
-                  .catch(error => {
-                    this.setState({loading: false, purchasing: false});
-                  });
+        const searchParam = '?' + queryParams.join('&');
+
+        this.props.history.push({
+            pathname: '/checkout',
+            search: searchParam
+        });
     }
     
     render() {

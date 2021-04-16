@@ -1,8 +1,11 @@
 import React from 'react';
+import { withRouter} from 'react-router-dom';
+
 import Ingrident from './Ingridient/Ingridient';
 import styles from './Burger.module.css';
 
 const burger = (props) => {
+    console.log(props);
     let transformedIngridients = Object.keys(props.ingridients)
                                         .map(ingridientKey => {
                                             return [...Array(props.ingridients[ingridientKey])].map((_, index) => {
@@ -26,4 +29,4 @@ const burger = (props) => {
     );
 }
 
-export default burger;
+export default withRouter(burger);
