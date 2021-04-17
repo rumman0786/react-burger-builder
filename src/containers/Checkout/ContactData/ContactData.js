@@ -4,17 +4,72 @@ import axiosOrder from '../../../axios-orders';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+import Input from '../../../components/UI/Input/Input';
 
 import styles from './ContactData.module.css';
 
 class ContactData extends Component {
     
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            zipCode: ''
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'text',
+                    placeholder: 'Firstname Lastname'
+                },
+                value: 'Rumman Bin Ashraf'
+            },
+            street: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: 'Iqbal Road'
+            },
+            zip: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'text',
+                    placeholder: 'Zip Code'
+                },
+                value: '1207'
+            },
+            country: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: 'Bangladesh'
+            },
+            email: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'email',
+                    placeholder: 'Email'
+                },
+                value: 'rumman.ashraf@gmail.com'
+            },
+            paymentMethod: {
+                elementType: 'input',
+                elementConfig : {
+                    type: 'text',
+                    placeholder: 'Payment Method'
+                },
+                value: 'Cash On Delivery'
+            },
+            deliveryType: {
+                elementType: 'select',
+                elementConfig : {
+                    options: [
+                        {value: 'fastest', label:'Fastest'},
+                        {value: 'cheapest', label:'Cheapest'}
+                    ]
+                },
+                value: 'astest'
+            }
         },
         loading: false
     };
@@ -27,17 +82,6 @@ class ContactData extends Component {
         const orderData = {
             ingridients: this.props.ingridients,
             price: this.props.totalPrice,
-            customer: {
-                name: 'Rumman Bin Ashraf',
-                address: {
-                    street: 'Iqbal Road',
-                    zip: 1212,
-                    country: 'Bangladesh'
-                },
-                email: 'rumman.ashraf@gmail.com'
-            },
-            paymentMethod: 'Cash on Delivery',
-            deliveryType: 'Regular'
         }
 
         axiosOrder.post('/orders.json', orderData)
@@ -53,12 +97,23 @@ class ContactData extends Component {
     }
     
     render() {
+        let orderForm = [];
+        for(let key in this.state.orderForm) {
+            orderForm.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
         let form = (
             <form>
-                <input className={styles.Input} type='text' name='name' placeholder='name'/>
-                <input className={styles.Input} type='text' name='email' placeholder='email'/>
-                <input className={styles.Input} type='text' name='street' placeholder='street'/>
-                <input className={styles.Input} type='text' name='zipCode' placeholder='zipCode'/>
+                {orderForm.map(input => {
+                    return <Input
+                                key={input.config.id}
+                                elementType={input.config.elementType}
+                                elementConfig={input.config.elementConfig}
+                                value={input.config.value}/>
+                })}
+
                 <Button buttonType='Success'
                         clicked={this.orderHandler}>Order Now</Button>
             </form>
