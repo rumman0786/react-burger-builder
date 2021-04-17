@@ -18,7 +18,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Firstname Lastname'
                 },
-                value: 'Rumman Bin Ashraf'
+                value: ''
             },
             street: {
                 elementType: 'input',
@@ -26,7 +26,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Street'
                 },
-                value: 'Iqbal Road'
+                value: ''
             },
             zip: {
                 elementType: 'input',
@@ -34,7 +34,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Zip Code'
                 },
-                value: '1207'
+                value: ''
             },
             country: {
                 elementType: 'input',
@@ -42,7 +42,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Country'
                 },
-                value: 'Bangladesh'
+                value: ''
             },
             email: {
                 elementType: 'input',
@@ -50,7 +50,7 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Email'
                 },
-                value: 'rumman.ashraf@gmail.com'
+                value: ''
             },
             paymentMethod: {
                 elementType: 'input',
@@ -58,7 +58,7 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Payment Method'
                 },
-                value: 'Cash On Delivery'
+                value: ''
             },
             deliveryType: {
                 elementType: 'select',
@@ -68,7 +68,7 @@ class ContactData extends Component {
                         {value: 'cheapest', label:'Cheapest'}
                     ]
                 },
-                value: 'astest'
+                value: ''
             }
         },
         loading: false
@@ -92,8 +92,21 @@ class ContactData extends Component {
                   .catch(error => {
                     this.setState({loading: false});
                   });
+    }
 
-        console.log(this.props.ingridients);
+    inputChangedHandler = (event, elementId) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+
+        const updatedFormValue = {
+            ...updatedOrderForm[elementId]
+        };
+
+        updatedFormValue.value = event.target.value;
+        updatedOrderForm[elementId] = updatedFormValue;
+        
+        this.setState({orderForm: updatedOrderForm});
     }
     
     render() {
@@ -104,14 +117,16 @@ class ContactData extends Component {
                 config: this.state.orderForm[key]
             });
         }
+
         let form = (
             <form>
                 {orderForm.map(input => {
                     return <Input
-                                key={input.config.id}
+                                key={input.id}
                                 elementType={input.config.elementType}
                                 elementConfig={input.config.elementConfig}
-                                value={input.config.value}/>
+                                value={input.config.value}
+                                changed={(event) => this.inputChangedHandler(event, input.id)}/>
                 })}
 
                 <Button buttonType='Success'
