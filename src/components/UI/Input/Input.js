@@ -4,10 +4,12 @@ import styles from './Input.module.css'
 
 const input = (props) => {
     let userInput = null;
+    let validationError = null;
 
     let inputClasses = [styles.InputElement];
     if(props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(styles.Invalid);
+        validationError = <p className={styles.ValidationError}>{props.errorMessage}</p>;
     }
 
     switch(props.elementType){
@@ -48,6 +50,7 @@ const input = (props) => {
         <div className={styles.Input}>
             <label className={styles.Label}>{props.label}</label>
             {userInput}
+            {validationError}
         </div>
     );
 };

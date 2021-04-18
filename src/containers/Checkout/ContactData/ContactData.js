@@ -21,6 +21,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid name',
                 validation: {
                     required: true
                 }
@@ -34,6 +35,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid street',
                 validation: {
                     required: true
                 }
@@ -47,6 +49,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid zip',
                 validation: {
                     required: true,
                     minLength: 5,
@@ -62,6 +65,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid country',
                 validation: {
                     required: true
                 }
@@ -75,6 +79,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid email',
                 validation: {
                     required: true
                 }
@@ -88,6 +93,7 @@ class ContactData extends Component {
                 value: '',
                 isValid: false,
                 touched: false,
+                errorMessage: 'Please enter a valid paymentMethod',
                 validation: {
                     required: true
                 }
@@ -188,6 +194,7 @@ class ContactData extends Component {
                                 value={input.config.value}
                                 invalid={!input.config.isValid}
                                 shouldValidate={input.config.validation}
+                                errorMessage={input.config.errorMessage}
                                 touched={input.config.touched}
                                 changed={(event) => this.inputChangedHandler(event, input.id)}/>
                 })}
