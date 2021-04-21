@@ -46,18 +46,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinued = () => {
-        let queryParams = [];
-        for(const [ingridient, quantity] of Object.entries(this.props.ingrdnts)) {
-            queryParams.push(encodeURIComponent(ingridient) + '=' + encodeURIComponent(quantity));
-        }
-        queryParams.push('price=' + this.state.totalPrice);
-
-        const searchParam = '?' + queryParams.join('&');
-
-        this.props.history.push({
-            pathname: '/checkout',
-            search: searchParam
-        });
+        this.props.history.push('/checkout');
     }
     
     render() {
@@ -121,6 +110,5 @@ const mapActionToProps = dispatch => {
         onRemoveIngridient: (ingrName) => dispatch({type:actionType.REMOVE_INGRIDIENT, ingridientName: ingrName})
     };
 };
-
 
 export default connect(mapStateToProps, mapActionToProps)(withErrorHandler(BurgerBuilder, axiosOrder));
