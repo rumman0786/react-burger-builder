@@ -15,28 +15,26 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 class BurgerBuilder extends Component {
     
     state  = {
-        totalPrice: 4.0,
-        purchasable: false,
         purchasing: false,
         loading: false,
         error: false
     }
 
     componentDidMount = () => {
-        axiosOrder.get("/ingridients.json")
-        .then(response => this.setState({ingridients: response.data}))
-        .catch(error => {
-            this.setState({error: true})
-        });
+        // axiosOrder.get("/ingridients.json")
+        // .then(response => this.setState({ingridients: response.data}))
+        // .catch(error => {
+        //     this.setState({error: true})
+        // });
     } 
 
-    updatePurchasableHandler = (ingridients) => {
+    getPurchasable = (ingridients) => {
 
         const sum = Object.keys(ingridients)
                            .map(ingridientKey => ingridients[ingridientKey])
                            .reduce((sum, ingridentAmount) => sum + ingridentAmount, 0);
 
-        this.setState({purchasable: sum > 0});
+        return sum > 0;
     }
 
     puchaseHandler = () => {
@@ -82,7 +80,7 @@ class BurgerBuilder extends Component {
                     removeHandler={this.props.onRemoveIngridient}
                     disabledHandler={disabledInfo}
                     currentPrice={this.props.price}
-                    purchasable={this.state.purchasable}
+                    purchasable={this.getPurchasable(this.props.ingrdnts)}
                     ordered={this.puchaseHandler}
                 />
             </Aux>;
