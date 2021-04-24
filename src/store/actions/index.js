@@ -5,4 +5,6 @@ export {
     fetchIngridientsFailedHandler
 } from './burgerBuilder';
 
-export {} from './order';
+export {
+    purchaseBurgerHandler,
+} from './order';

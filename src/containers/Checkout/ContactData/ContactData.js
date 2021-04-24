@@ -6,6 +6,8 @@ import axiosOrder from '../../../axios-orders';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 import styles from './ContactData.module.css';
 
@@ -112,14 +114,11 @@ class ContactData extends Component {
                 validation: {}
             }
         },
-        formIsValid: false,
-        loading: false
+        formIsValid: false
     };
 
     orderHandler = (event) => {
         event.preventDefault();
-
-        this.setState({loading: true});
 
         const formData = {};
         for(let formId in this.state.orderForm) {
@@ -132,14 +131,7 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        axiosOrder.post('/orders.json', orderData)
-                  .then(response => {
-                    this.setState({loading: false});
-                    this.props.history.push('/')
-                  })
-                  .catch(error => {
-                    this.setState({loading: false});
-                  });
+        this.props.onOrderBurger(orderData);
     }
 
     isValid(value, rules) {
@@ -212,7 +204,7 @@ class ContactData extends Component {
             </form>
         );
 
-        if(this.state.loading) {
+        if(this.props.loading) {
             form = <Spinner />
         }
 
@@ -227,9 +219,17 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingrdnts: state.ingridients,
-        price: state.totalPrice
+        ingrdnts: state.order.ingridients,
+        price: state.order.totalPrice,
+        loading: state.order.loading
     };
 };
 
-export default connect(mapStateToProps, null)(ContactData);
+
+const mapActionToProps = dispatch => {
+    return  {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerHandler(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapActionToProps)(withErrorHandler(ContactData));
