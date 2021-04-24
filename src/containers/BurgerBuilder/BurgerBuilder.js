@@ -7,7 +7,7 @@ import Burger from '../../components/Burger/Burger';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Modal from '../../components/UI/Modal/Modal'
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actionType from '../../store/actions';
+import * as Actions from '../../store/actions/index';
 
 import Aux from '../../hoc/Aux/aux';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -106,8 +106,8 @@ const mapStateToProps = state => {
 
 const mapActionToProps = dispatch => {
     return {
-        onAddIngridient: (ingrName) => dispatch({type:actionType.ADD_INGRIDIENT, ingridientName: ingrName}),
-        onRemoveIngridient: (ingrName) => dispatch({type:actionType.REMOVE_INGRIDIENT, ingridientName: ingrName})
+        onAddIngridient: (ingrName) => dispatch(Actions.addIngridient(ingrName)),
+        onRemoveIngridient: (ingrName) => dispatch(Actions.removeIngridient(ingrName))
     };
 };
 
