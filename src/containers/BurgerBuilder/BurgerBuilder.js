@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import axiosOrder from '../../axios-orders';
 import { connect } from 'react-redux';
+import axiosOrder from '../../axios-orders';
 
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Burger from '../../components/Burger/Burger';
@@ -16,16 +16,10 @@ class BurgerBuilder extends Component {
     
     state  = {
         purchasing: false,
-        loading: false,
-        error: false
     }
 
     componentDidMount = () => {
-        // axiosOrder.get("/ingridients.json")
-        // .then(response => this.setState({ingridients: response.data}))
-        // .catch(error => {
-        //     this.setState({error: true})
-        // });
+        this.props.onInitIngridients();
     } 
 
     getPurchasable = (ingridients) => {
@@ -59,7 +53,9 @@ class BurgerBuilder extends Component {
         }
 
         let orderSummary = null;
-        let burger = this.state.error ? 'Ingridients cannot be loaded please try again later.' : <Spinner />;
+        let burger = this.props.error ? 'Ingridients cannot be loaded please try again later.' : <Spinner />;
+
+        console.log(this.props.ingrdnts);
 
         if(this.props.ingrdnts) {
             burger = <Aux>
@@ -82,10 +78,6 @@ class BurgerBuilder extends Component {
                             />;
         }
 
-        if(this.state.loading) {
-            orderSummary = <Spinner />;
-        }
-
         return (
             <Aux>
                 <Modal showSummary={this.state.purchasing} backdropHandler={this.purchaseCancelled}>
@@ -100,14 +92,17 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingrdnts: state.ingridients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 };
 
 const mapActionToProps = dispatch => {
     return {
         onAddIngridient: (ingrName) => dispatch(Actions.addIngridient(ingrName)),
-        onRemoveIngridient: (ingrName) => dispatch(Actions.removeIngridient(ingrName))
+        onRemoveIngridient: (ingrName) => dispatch(Actions.removeIngridient(ingrName)),
+        onInitIngridients: () => dispatch(Actions.initIngridients()),
+        onfetchIngridientsFailedHandler: () => dispatch(Actions.fetchIngridientsFailedHandler())
     };
 };
 

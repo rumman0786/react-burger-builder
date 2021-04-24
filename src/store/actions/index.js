@@ -1,6 +1,8 @@
 export {
     addIngridient,
-    removeIngridient
+    removeIngridient,
+    initIngridients,
+    fetchIngridientsFailedHandler
 } from './burgerBuilder';
 
 export {} from './order';
