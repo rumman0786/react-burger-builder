@@ -232,4 +232,4 @@ const mapActionToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapActionToProps)(withErrorHandler(ContactData));
+export default connect(mapStateToProps, mapActionToProps)(withErrorHandler(ContactData, axiosOrder));
