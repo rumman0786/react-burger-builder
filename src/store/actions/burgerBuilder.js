@@ -1,4 +1,3 @@
-import Ingrident from '../../components/Burger/Ingridient/Ingridient';
 import * as actionTypes from './actionTypes';
 import axiosOrder from '../../axios-orders';
 
