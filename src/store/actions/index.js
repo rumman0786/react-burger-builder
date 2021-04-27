@@ -7,4 +7,5 @@ export {
 
 export {
     purchaseBurgerHandler,
+    purchaseInitHandler
 } from './order';
