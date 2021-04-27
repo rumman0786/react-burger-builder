@@ -40,3 +40,47 @@ export const purchaseInitHandler = () => {
         type: actionTypes.PURCHASE_INIT
     };
 };
+
+export const fetchOrdersStart = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_START
+    };
+};
+
+
+export const fetchOrdersSuccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        orders: orders
+    };
+};
+
+
+export const fetchOrdersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAIL,
+        error: error
+    };
+};
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(fetchOrdersStart());
+
+        let dbOrders = [];
+        axiosOrder.get('/orders.json')
+                    .then(res => {
+                        for(let key in res.data) {
+                            dbOrders.push({
+                                ...res.data[key],
+                                id: key
+                            });
+                        }
+
+                        dispatch(fetchOrdersSuccess(dbOrders));
+                    })
+                    .catch(error => {
+                        dispatch(fetchOrdersFail(error));
+                    });
+    };
+}

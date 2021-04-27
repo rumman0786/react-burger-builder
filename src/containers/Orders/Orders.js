@@ -1,47 +1,54 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import axiosInstance from '../../axios-orders';
+
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+
 import Order from '../../components/Order/Order';
+import * as Action from '../../store/actions/index';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Orders extends Component {
-    state = {
-        orders : [],
-        loading: false
-    };
 
     componentDidMount() {
-        this.setState({loading: true});
-        let dbOrders = [];
-        axiosInstance.get('/orders.json')
-                    .then(res => {
-                        for(let key in res.data) {
-                            dbOrders.push({
-                                ...res.data[key],
-                                id: key
-                            });
-                        }
-
-                        this.setState({loading: true, orders: dbOrders});
-                    })
-                    .catch(error => {
-                        this.setState({loading: true});
-                    });
+        this.props.onFetchOrders();
     }
 
     render() {
-        return (
-            <div>
-                {this.state.orders.map(order => {
+        console.log(this.props.loading);
+        console.log(this.props.orders);
+        let orders = <Spinner />;
+        if(!this.props.loading) {
+            orders = (
+                this.props.orders.map(order => {
                     return (
                         <Order key={order.id}
                                ingridients={order.ingridients}
                                price={order.price}/>
                     );
-                })}
+                })
+            );
+        }
+        return (
+            <div>
+                {orders}
             </div>
         );
     }
 }
 
-export default withErrorHandler(Orders, axiosInstance);
+const mapStateToProps = state => {
+    return {
+        orders : state.order.orders,
+        loading: state.order.loading
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchOrders: () => dispatch(Action.fetchOrders())
+    };
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axiosInstance));

@@ -4,6 +4,7 @@ import style from './Order.module.css';
 
 const order = (props) => {
     const ingridients = [];
+    console.log(props);
     for(let key in props.ingridients) {
         ingridients.push(
             <span
