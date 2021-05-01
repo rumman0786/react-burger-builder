@@ -44,7 +44,7 @@ class Auth extends Component {
                 }
             }    
         },
-        isSignUp: true
+        isSignUp: false
     };
 
     isValid(value, rules) {
@@ -144,6 +144,7 @@ class Auth extends Component {
 
         return (
             <div className={styles.Auth}>
+                <h1>{this.state.isSignUp ? 'Please Sign Up' : 'Please Sign In'}</h1>
                 {error}
                 {form}
             </div>
