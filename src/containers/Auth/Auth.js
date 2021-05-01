@@ -8,6 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
 
 import styles from './Auth.module.css';
+import { Redirect } from 'react-router-dom';
 
 class Auth extends Component {
     
@@ -142,9 +143,15 @@ class Auth extends Component {
             error = this.props.error.message;
         }
 
+        let authRedirect = null;
+        if(this.props.authenitcated) {
+            authRedirect = <Redirect to="/" />;
+        }
+
         return (
             <div className={styles.Auth}>
                 <h1>{this.state.isSignUp ? 'Please Sign Up' : 'Please Sign In'}</h1>
+                {authRedirect}
                 {error}
                 {form}
             </div>
@@ -155,7 +162,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        authenitcated: state.auth.token !== null
     };
  };
 
