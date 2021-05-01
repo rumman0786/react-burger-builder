@@ -63,12 +63,12 @@ export const fetchOrdersFail = (error) => {
     };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
 
         let dbOrders = [];
-        axiosOrder.get('/orders.json')
+        axiosOrder.get('/orders.json?auth=' + token)
                     .then(res => {
                         for(let key in res.data) {
                             dbOrders.push({
