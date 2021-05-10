@@ -44,7 +44,8 @@ const initIngridient = (state, action) => {
     const initUpdatedState = {
         ingridients: action.ingridents,
         totalPrice: 4.0,
-        error: false
+        error: false,
+        building: false
     };
 
     return updateObject(state, initUpdatedState);
